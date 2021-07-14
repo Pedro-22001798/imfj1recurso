@@ -313,3 +313,18 @@ class Mesh:
         mesh.polygons.append(poly)
 
         return mesh
+
+    @staticmethod
+    def create_cylinder(numSides, radius, height, mesh=None):
+        # Creates mesh if one was not given
+        if mesh is None:
+            mesh = Mesh("UnknownCylinder")
+
+        vertices = []
+        verticesdown = []
+
+        for j in range(numSides):
+            vertices.append(Vector3(radius * numpy.cos(j*(2 * numpy.pi / numSides)), -1, radius * numpy.sin(j*(2 * numpy.pi / numSides))))
+            verticesdown.append(Vector3(radius * numpy.cos(j*(2 * numpy.pi / numSides)), height, radius * numpy.sin(j*(2 * numpy.pi / numSides))))
+
+        i = 0
