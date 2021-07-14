@@ -328,3 +328,26 @@ class Mesh:
             verticesdown.append(Vector3(radius * numpy.cos(j*(2 * numpy.pi / numSides)), height, radius * numpy.sin(j*(2 * numpy.pi / numSides))))
 
         i = 0
+
+        for vertex in vertices:
+
+            if i >= 1:
+               # Bottom up triangles
+                Mesh.create_tri(vertices[i-1], verticesdown[i-1], vertex, mesh)
+                Mesh.create_tri(vertices[i-1], Vector3(0, -1, 0), vertex, mesh)
+                
+                # Top down triangles
+                Mesh.create_tri(verticesdown[i-1], vertex, verticesdown[i], mesh)
+                Mesh.create_tri(verticesdown[i-1], Vector3(0, height, 0), verticesdown[i], mesh)
+
+            i = i + 1
+
+        # Bottom mesh
+        Mesh.create_tri(vertices[numSides-1], verticesdown[numSides-1], vertices[0], mesh)
+        Mesh.create_tri(vertices[numSides-1], Vector3(0, -1, 0), vertices[0], mesh)
+
+        # Top mesh
+        Mesh.create_tri(verticesdown[numSides-1], vertices[numSides-1], verticesdown[0], mesh)
+        Mesh.create_tri(verticesdown[numSides-1], Vector3(0, height, 0), verticesdown[0], mesh)
+
+        return mesh
