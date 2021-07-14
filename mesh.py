@@ -5,6 +5,7 @@ import math
 import pygame
 from vector3 import Vector3
 import matrix4
+import numpy
 
 
 class Mesh:
